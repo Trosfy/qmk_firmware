@@ -54,6 +54,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OPENDRAIN_INDICATORS
 #define LED_CAPS_LOCK_PIN A6
 
+// Mouse setting
+#define MK_KINETIC_SPEED
+#define MOUSEKEY_INITIAL_SPEED 200
+#define MOUSEKEY_BASE_SPEED 1600
+
+// Autoshift
+#define AUTO_SHIFT_TIMEOUT 175
+#define NO_AUTO_SHIFT_SPECIAL
+
+// Leaderkey
+#define LEADER_PER_KEY_TIMING
+#define LEADER_TIMEOUT 250
+
 /*
  * Feature disable options
  *  These options are also useful to firmware size reduction.
