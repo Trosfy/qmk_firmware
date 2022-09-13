@@ -29,6 +29,8 @@ EXTRAKEY_ENABLE = yes
 KEY_LOCK_ENABLE = no
 LAYOUTS = 60_ansi
 
+LEADER_ENABLE = yes
+
 # Other featues
 BOOTMAGIC_ENABLE = no
 CONSOLE_ENABLE = no
@@ -37,6 +39,5 @@ RAW_ENABLE = yes
 MIDI_ENABLE = no
 VIRTSER_ENABLE = no
 COMBO_ENABLE = no
-AUTO_SHIFT_ENABLE = yes
 BOOTLOADER = custom
 PROGRAM_CMD = annepro2_tools --boot $(BUILD_DIR)/$(TARGET).bin

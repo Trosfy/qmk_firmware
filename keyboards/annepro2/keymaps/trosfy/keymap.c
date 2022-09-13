@@ -186,7 +186,7 @@ enum {
   */
  [FN1] = LAYOUT_60_ansi( /* FN1 */
     KC_GRAVE,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_DEL,
-    _______, _______, _______, _______, _______, _______, _______, _______, KC_UP, _______, _______, KC_HOME, KC_END, KC_PSCR,
+    _______, _______, _______, _______, _______, _______, _______, _______, KC_UP, _______, KC_LEAD, KC_HOME, KC_END, KC_PSCR,
     _______, _______, _______, _______, _______, _______, _______, KC_LEFT,   KC_DOWN, KC_RGHT, KC_PGUP, KC_PGDN, KC_TRNS,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_INS, KC_DEL, _______,
     _______, _______, _______, _______, _______, _______, _______, _______
@@ -210,7 +210,7 @@ enum {
     KC_AP2_USB, KC_AP2_BT1, KC_AP2_BT2, KC_AP2_BT3, KC_AP2_BT4, _______, _______, _______, _______,  KC_AP_LED_OFF, KC_AP_LED_ON, KC_AP_LED_NEXT_INTENSITY, KC_AP_LED_SPEED, KC_AP2_BT_UNPAIR,
        MO(FN2),    _______,    _______,    _______,    _______, _______, _______, _______, _______,       _______,                KC_MPLY, KC_MPRV, KC_MNXT, _______,
        _______,    _______,    _______,    _______,    _______, _______, _______, _______, _______,        _______,                KC_BRID, KC_BRIU, _______,
-       _______,    _______,    _______,    _______,    _______, _______, _______, KC_MUTE, KC_VOLD,       KC_VOLU,                _______, KC_ASTG,
+       _______,    _______,    _______,    _______,    _______, _______, _______, KC_MUTE, KC_VOLD,       KC_VOLU,                _______, _______,
        _______,    _______,    _______,    _______,    _______, MO(FN1), MO(FN2), _______
  ),
 };
@@ -411,18 +411,6 @@ bool led_update_user(led_t leds) {
     return true;
 }
 
-uint16_t get_autoshift_timeout(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
-        case AUTO_SHIFT_NUMERIC:
-            return 2 * get_generic_autoshift_timeout();
-        case AUTO_SHIFT_SPECIAL:
-            return get_generic_autoshift_timeout() + 50;
-        case AUTO_SHIFT_ALPHA:
-        default:
-            return get_generic_autoshift_timeout();
-    }
-}
-
 // Determine the current tap dance state
 uint8_t cur_dance(qk_tap_dance_state_t *state) {
   if (state->count == 1) {
@@ -527,6 +515,9 @@ void grave_layer_finished(qk_tap_dance_state_t *state, void *user_data) {
         layer_off(ARROW);
       }
       break;
+    case QUADRIPLE_HOLD:
+      layer_move(BASE);
+      break;
   }
 }
 
@@ -538,3 +529,16 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [ESC_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, esc_layer_finished, esc_layer_reset, 250),
   [GRV_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, grave_layer_finished, grave_layer_reset, 300),
 };
+
+LEADER_EXTERNS();
+
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    leading = false;
+    leader_end();
+
+	  SEQ_THREE_KEYS(KC_P, KC_P, KC_P) {
+      SEND_STRING("Hello World!");
+    }
+  }
+}
