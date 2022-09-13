@@ -78,22 +78,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		KC_GRAVE,KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG,RGB_RMOD, RGB_MOD, RGB_VAD, RGB_VAI, KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MPLY, KC_MPRV, KC_MNXT, KC_PSCR,          KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BRID, KC_BRIU, KC_TRNS,                   KC_TRNS,
-		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MUTE, KC_VOLD, KC_VOLU, KC_EJCT, KC_ASTG,                   KC_TRNS, KC_TRNS,
+		KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_MUTE, KC_VOLD, KC_VOLU, KC_EJCT, KC_TRNS,                   KC_TRNS, KC_TRNS,
 		KC_TRNS, KC_TRNS, KC_TRNS,                            KC_TRNS,                                     KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS),
 
 };
-
-uint16_t get_autoshift_timeout(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
-        case AUTO_SHIFT_NUMERIC:
-            return 2 * get_generic_autoshift_timeout();
-        case AUTO_SHIFT_SPECIAL:
-            return get_generic_autoshift_timeout() + 50;
-        case AUTO_SHIFT_ALPHA:
-        default:
-            return get_generic_autoshift_timeout();
-    }
-}
 
 // Determine the current tap dance state
 uint8_t cur_dance(qk_tap_dance_state_t *state) {
@@ -203,8 +191,8 @@ void grave_layer_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [ESC_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, esc_layer_finished, esc_layer_reset, 250),
-  [GRV_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED_TIME(NULL, grave_layer_finished, grave_layer_reset, 300),
+  [ESC_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, esc_layer_finished, esc_layer_reset),
+  [GRV_TAP_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, grave_layer_finished, grave_layer_reset),
 };
 
 LEADER_EXTERNS();
@@ -217,7 +205,7 @@ void matrix_scan_user(void) {
     SEQ_TWO_KEYS(KC_PGUP, KC_PGDN) {
       register_code(KC_SLEP);
     }
-	SEQ_THREE_KEYS(KC_P, KC_P, KC_P) {
+	  SEQ_THREE_KEYS(KC_P, KC_P, KC_P) {
       SEND_STRING("Hello World!");
     }
     SEQ_FOUR_KEYS(KC_PGUP, KC_PGDN, KC_END, KC_RIGHT) {

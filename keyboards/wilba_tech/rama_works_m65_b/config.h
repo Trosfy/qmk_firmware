@@ -110,10 +110,9 @@
  #define MOUSEKEY_INITIAL_SPEED 200
  #define MOUSEKEY_BASE_SPEED 1600
 
- // Autoshift
- #define AUTO_SHIFT_TIMEOUT 175
- #define NO_AUTO_SHIFT_SPECIAL
-
  // Leaderkey
  #define LEADER_PER_KEY_TIMING
  #define LEADER_TIMEOUT 250
+
+ // Tap Dance
+#define TAPPING_TERM 250
