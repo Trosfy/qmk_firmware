@@ -20,6 +20,8 @@ RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 AUDIO_ENABLE = no           # Audio output
 CIE1931_CURVE = yes
 
+VIA_ENABLE = yes
+
 # Do not put the microcontroller into power saving mode
 # when we get USB suspend event. We want it to keep updating
 # backlight effects.
